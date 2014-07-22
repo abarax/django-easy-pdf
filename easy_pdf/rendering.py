@@ -15,7 +15,6 @@ import xhtml2pdf.default
 from xhtml2pdf import pisa
 
 from .exceptions import UnsupportedMediaPathException, PDFRenderingError
-import pdb
 
 try:
     import urllib2
