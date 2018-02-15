@@ -1,22 +1,27 @@
-django-easy-pdf
-===============
+Django PDF rendering
+====================
 
 Django PDF rendering, the easy way.
 
-.. image:: https://pypip.in/v/django-easy-pdf/badge.png
+.. image:: https://img.shields.io/pypi/v/django-easy-pdf.svg
     :target: https://pypi.python.org/pypi/django-easy-pdf/
     :alt: Latest Version
-
-.. image:: https://pypip.in/d/django-easy-pdf/badge.png
+.. image:: https://img.shields.io/badge/wheel-yes-green.svg
     :target: https://pypi.python.org/pypi/django-easy-pdf/
-    :alt: Downloads
-
-.. image:: https://pypip.in/license/django-easy-pdf/badge.png
+    :alt: Wheel
+.. image:: https://img.shields.io/pypi/l/django-easy-pdf.svg
     :target: https://pypi.python.org/pypi/django-easy-pdf/
     :alt: License
 
 Developed at `en.ig.ma software shop <http://en.ig.ma>`_.
 
+Development Version
+-------------------
+
+Note: A new PDF rendering backend using WeasyPrint for more accurate rendering is in development under the develop branch.
+See https://github.com/nigma/django-easy-pdf/pull/34 for changes, testing and discussion.
+
+If you rely on the ``xhtml2pdf`` rendering backend and templates pin the package version to ``django-easy-pdf>=0.1.1<0.2.0``.
 
 Overview
 --------
@@ -35,8 +40,10 @@ to render PDFs in the backend outside the request scope
 Quickstart
 ----------
 
-1. Include ``django-easy-pdf``, ``xhtml2pdf>=0.0.6`` and ``reportlab>=2.7,<3``
-   in your ``requirements.txt`` file.
+1. Include ``django-easy-pdf``, ``xhtml2pdf`` in your ``requirements.txt`` file.
+   If you are on Python 3 you need to install the latest version of Reportlab and the beta version of xhtml2pdf::
+
+    $ pip install xhtml2pdf>=0.2b1
 
 2. Add ``easy_pdf`` to ``INSTALLED_APPS``.
 
@@ -57,26 +64,34 @@ Quickstart
         from easy_pdf.views import PDFTemplateView
 
         class HelloPDFView(PDFTemplateView):
-            template_name = "hello.html"
+            template_name = 'hello.html'
 
+4. You can also use a mixin to output PDF from Django generic views:
+
+    .. code-block:: python
+
+        class PDFUserDetailView(PDFTemplateResponseMixin, DetailView):
+            model = get_user_model()
+            template_name = 'user_detail.html'
 
 Documentation
 -------------
 
-The full documentation is at `django-easy-pdf.rtfd.org <http://django-easy-pdf.rtfd.org>`_.
+The full documentation is at `django-easy-pdf.readthedocs.io <https://django-easy-pdf.readthedocs.io/>`_.
 
 A live demo is at `easy-pdf.herokuapp.com <https://easy-pdf.herokuapp.com/>`_.
 You can run it locally after installing dependencies by running ``python demo.py``
-script from the cloned repository.
+script from the cloned repository or through Docker with ``make demo``.
+
 
 Dependencies
 ------------
 
 ``django-easy-pdf`` depends on:
 
-    - ``django>=1.5.1``
-    - ``xhtml2pdf>=0.0.6``
-    - ``reportlab>=2.7,<3``
+    - ``django>=1.10``
+    - ``xhtml2pdf>=0.2b1``
+    - ``reportlab``
 
 
 License
@@ -89,7 +104,8 @@ Other Resources
 ---------------
 
 - GitHub repository - https://github.com/nigma/django-easy-pdf
-- PyPi Package site - http://pypi.python.org/pypi/django-easy-pdf
+- PyPi Package site - https://pypi.python.org/pypi/django-easy-pdf
+- Docs - https://django-easy-pdf.readthedocs.io/
 
 
 Commercial Support
